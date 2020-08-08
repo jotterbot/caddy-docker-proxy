@@ -27,6 +27,14 @@ func labelsToCaddyfile(labels map[string]string, templateData interface{}, getTa
 			}
 			return strings.Join(transformed, " "), err
 		},
+		"upstream_port": func(options ...interface{}) (string, error) {
+			targets, err := getTargets()
+			transformed := []string{}
+			for _, target := range targets {
+				transformed = append(transformed, "http://127.0.0.1:"+target)
+			}
+			return strings.Join(transformed, " "), err
+		},
 		"http": func() string {
 			return "http"
 		},
